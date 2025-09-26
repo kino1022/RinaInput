@@ -125,33 +125,42 @@ namespace RinaInput.Runtime.Operators {
         public static Observable<Unit> ChordInInterval<T>(this Observable<InputSignal<T>> source, TimeSpan interval,
             params Observable<InputSignal<T>>[] others) where T : struct 
         {
+            //全てのストリームが入力されたかどうかのストリームを取得
             var pressStream = source.IsInputAny(others);
 
             return Observable
+                //IEnumerable方式のストリームを統合
                 .CombineLatest(pressStream)
                 .Scan(
                     (State: State.Idle, StartTime: 0.0, IsCompleted: false),
                     (acc, currentStates) => {
+                        //押されているかどうかの入力をいずれかに挿入する
                         var isAnyPressed = currentStates.Any(isPressed => isPressed);
+                        //全てが入力されているかどうかの値を挿入する
                         var allPressed = currentStates.All(isPressed => isPressed);
 
                         switch (acc.State) {
+                            //もし入力がなされていなかった場合には時間のみを現在の時間に更新する
                             case State.Idle:
                                 if (isAnyPressed) {
                                     return (State.Started, Time.realtimeSinceStartupAsDouble, false);
                                 }
-
                                 break;
+                            //入力が開始した場合の分岐処理
                             case State.Started:
-                                if (allPressed) {
+                                //全体が既に入力されていた場合には現在の状態を返す
+                                if (allPressed)
+                                {
                                     return (acc.State, acc.StartTime, true);
                                 }
-
-                                if (!isAnyPressed) {
+                                //いずれも入力されていなかった場合は経過時間を初期化
+                                if (!isAnyPressed)
+                                {
                                     return (State.Idle, 0.0, false);
                                 }
-
-                                if (Time.realtimeSinceStartupAsDouble - acc.StartTime > interval.TotalSeconds) {
+                                //経過時間が待機時間を上回った場合は全てを初期化する
+                                if (Time.realtimeSinceStartupAsDouble - acc.StartTime > interval.TotalSeconds)
+                                {
                                     return (State.Idle, 0.0, false);
                                 }
 

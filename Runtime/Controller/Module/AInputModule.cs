@@ -15,6 +15,12 @@ using VContainer.Unity;
 namespace RinaInput.Controller.Module {
     public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IStartable, IDisposable where T : struct {
 
+        /// <summary>
+        /// 入力自体に優先度を定義して管理すると、全体の動きに遅延が入るのと同時に、デザイナーの自由度が低下するので
+        /// 入力データを送った先で管理するようにする
+        /// よってキャンセル関連のストリーム処理は廃して単純な入力処理のみに注力する
+        /// </summary>
+
         private InputActionReference m_actionRef;
         
         protected Observable<InputSignal<T>> m_stream;
