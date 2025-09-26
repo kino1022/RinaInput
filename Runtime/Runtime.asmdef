@@ -1,0 +1,18 @@
+{
+    "name": "RinaInput",
+    "rootNamespace": "RinaInput",
+    "references": [
+        "GUID:92b68a3bbc8c0486b9718b9503336cc4",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
