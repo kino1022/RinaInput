@@ -7,22 +7,22 @@ using Sirenix.Serialization;
 using Sirenix.Utilities;
 using UnityEngine;
 
-namespace System.Runtime.CompilerServices.Controller.Command {
+namespace RinaInput.Controller.Command {
     public abstract class AInputCommand : SerializedScriptableObject, IInputCommand
     {
 
+        /// <summary>
+        /// 最終的に流れるストリーム
+        /// </summary>
         private Observable<Unit> m_stream;
 
+        /// <summary>
+        /// このコマンドの入力に許された猶予
+        /// </summary>
         [SerializeField]
         [LabelText("入力猶予")]
         [ProgressBar(0, 10000)]
-        private int m_inputGrace = 0;
-
-        [OdinSerialize]
-        [LabelText("入力待受キャンセルコマンド")]
-        private List<IInputCommand> m_cancelCommands = new List<IInputCommand>();
-
-        protected Observable<Unit> m_cancelStream;
+        protected int m_inputGrace = 0;
 
         public Observable<Unit> Stream => m_stream;
 
@@ -30,17 +30,9 @@ namespace System.Runtime.CompilerServices.Controller.Command {
 
         public void GenerateStream()
         {
-            m_cancelStream = CreateCancelStream();
             m_stream = CreateStream();
         }
-
-        private Observable<Unit> CreateCancelStream()
-        {
-            var result = Observable.ReturnUnit().Share();
-            if (m_cancelCommands.Count is 0) return result;
-            m_cancelCommands.Select(x => x.Stream).ForEach(x => x.Merge(x));
-            return result;
-        }
+        
 
         protected abstract Observable<Unit> CreateStream();
         

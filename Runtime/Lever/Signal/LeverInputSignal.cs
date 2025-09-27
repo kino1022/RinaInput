@@ -1,4 +1,4 @@
-using RinaInput.Runtime.Signal;
+using RinaInput.Signal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,4 +11,5 @@ namespace RinaInput.Lever.Signal {
     /// <param name="Time">入力され続けている時間</param>
     public record LeverInputSignal(InputActionPhase Phase, Vector2 Value, double Time)
         : InputSignal<Vector2>(Phase, Value, Time);
+    
 }

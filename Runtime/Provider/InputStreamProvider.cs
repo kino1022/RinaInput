@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using R3;
-using RinaInput.Runtime.Signal;
+using RinaInput.Signal;
 using RinaInput.Runtime.Wrapper.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using R3;
 using RinaInput.Lever.Direction.Definition;
 using RinaInput.Lever.Signal;
-using RinaInput.Runtime.Operators;
-using RinaInput.Runtime.Signal;
+using RinaInput.Signal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,14 +16,14 @@ namespace RinaInput.Lever.Operator {
         /// <param name="source"></param>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        public static Observable<LeverInputSignal> OnMove(this Observable<InputSignal<Vector2>> source, float threshold = 0.2f) {
+        public static Observable<InputSignal<Vector2>> OnMove(this Observable<InputSignal<Vector2>> source, float threshold = 0.2f) {
             return source
                 //入力されている状態をフィルタ
                 .Where(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Performed)
                 //入力がもしNeutralならフィルタ
                 .Where(x => x.Value.DirectionizeFour(threshold) != Direction_Four.Neutral)
                 //Observableの値をLeverInputSignalに変更
-                .Select(x => new LeverInputSignal(
+                .Select(x => new InputSignal<Vector2>(
                     x.Phase,
                     x.Value,
                     x.Time
@@ -48,18 +46,18 @@ namespace RinaInput.Lever.Operator {
         public static Observable<Unit> Sequence(this Observable<LeverInputSignal> source, TimeSpan interval, float threshold, params Direction_Four[] directions)
         {
             //方向指定がない場合は空のストリームを返す
-            if (directions is null or directions.Length is 0) return Observable.Empty(R3.Unit.Default);
+            if (directions is null || directions.Length == 0) return Observable.Empty<Unit>();
 
             //LeverInputSignalのObsevableをDrection_FourのObservableに変換
             var directionsStream = source
                     //渡されたInputSignalを四方向に変換
                     .Select(x => x.Value.DirectionizeFour(threshold))
                     //変化が起こるまで待機
-                    .DistinctUntilChange()
+                    .DistinctUntilChanged()
                     //Neutralは変化から除外
                     .Where(d => d != Direction_Four.Neutral);
 
-            return directions
+            return directionsStream
                     .Scan(
                         (nextIndex: 0, timestamp: 0.0),
                         (state, currentDirection) =>
@@ -69,7 +67,7 @@ namespace RinaInput.Lever.Operator {
                             if (state.nextIndex > 0 && (currentTime - state.timestamp > interval.TotalSeconds))
                             {
                                 //最初の方向が入力された場合はインデックスを強制的に１
-                                if (currentDirection is directions[0])
+                                if (currentDirection == directions[0])
                                 {
                                     return (nextIndex: 1, timestamp: currentTime);
                                 }
@@ -80,7 +78,7 @@ namespace RinaInput.Lever.Operator {
                             //現在判定を行うDirectionのインデックス
                             var expectedDirection = directions[state.nextIndex];
                             //方向が一致した場合はインデックスをインクリメントして、制限時間を更新
-                            if (currentDirection is expectedDirection)
+                            if (currentDirection == expectedDirection)
                             {
                                 return (nextIndex: state.nextIndex++, timestamp: currentTime);
                             }

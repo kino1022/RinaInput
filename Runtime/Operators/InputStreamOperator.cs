@@ -2,15 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GeneralModule.Input.Signal;
 using R3;
-using RinaInput.Runtime.Signal;
+using RinaInput.Signal;
 using Sirenix.OdinValidator.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
-namespace RinaInput.Runtime.Operators {
+namespace RinaInput.Operators {
     public static class InputStreamOperator {
 
         /// <summary>
@@ -80,6 +78,13 @@ namespace RinaInput.Runtime.Operators {
 
         }
 
+        /// <summary>
+        /// 長押しを判定する
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="charge"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Observable<TimeSpan> Charge<T>(this Observable<InputSignal<T>> source, TimeSpan charge)
             where T : struct
         {
@@ -92,9 +97,16 @@ namespace RinaInput.Runtime.Operators {
                 .Where(duration => duration < charge);
         }
 
+        /// <summary>
+        /// 厳密ではない同時押しの判定(長押しされている状態から残りのボタンを入力しても反応する)
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="others"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Observable<Unit> Chord<T>(this Observable<InputSignal<T>> source,
             params Observable<InputSignal<T>>[] others)
-            where T : struct 
+            where T : struct
         {
             var allStream = others
                 .Concat(new List<Observable<InputSignal<T>>>(others.ToList()))

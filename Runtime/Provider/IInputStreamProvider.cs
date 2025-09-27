@@ -1,5 +1,5 @@
 using R3;
-using RinaInput.Runtime.Signal;
+using RinaInput.Signal;
 using UnityEngine.InputSystem;
 
 namespace RinaInput.Runtime.Provider {
