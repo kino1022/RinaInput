@@ -6,9 +6,11 @@ using RinaInput.Signal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace RinaInput.Lever.Operator {
-    
-    public static class LeverStreamOperator {
+namespace RinaInput.Lever.Operator
+{
+
+    public static class LeverStreamOperator
+    {
 
         /// <summary>
         /// レバーが倒された際に発行されるストリーム
@@ -16,7 +18,8 @@ namespace RinaInput.Lever.Operator {
         /// <param name="source"></param>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        public static Observable<InputSignal<Vector2>> OnMove(this Observable<InputSignal<Vector2>> source, float threshold = 0.2f) {
+        public static Observable<InputSignal<Vector2>> OnMove(this Observable<InputSignal<Vector2>> source, float threshold = 0.2f)
+        {
             return source
                 //入力されている状態をフィルタ
                 .Where(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Performed)
@@ -96,6 +99,50 @@ namespace RinaInput.Lever.Operator {
                     //全ての入力が完了したかどうかの検知
                     .Where(state => state.nextIndex == directions.Length)
                     //入力が完了していた場合はUnitを放流
+                    .Select(_ => Unit.Default);
+        }
+
+        public static Observable<Unit> Sequence_Eight(this Observable<InputSignal<Vector2>> source, TimeSpan interval, float threshold, params Direction_Eight[] directions)
+        {
+            if (directions is null || directions.Length is 0) return Observable.Empty<Unit>();
+
+            var directionStream = source
+                .Select(x => x.Value.DirectionizeEight(threshold))
+                .DistinctUntilChanged()
+                .Where(d => d is not Direction_Eight.Neutral);
+
+            return directionStream
+                .Scan(
+                    (nextIndex: 0, timestamp: 0.0),
+                    (state, currentDirection) =>
+                    {
+                        var currentTime = Time.realtimeSinceStartupAsDouble;
+
+                        if (state.nextIndex > 0 && currentTime - state.timestamp > interval.TotalSeconds)
+                        {
+                            if (currentDirection == directions[0])
+                            {
+                                return (nextIndex: 1, timestamp: currentTime);
+                            }
+                            return (nextIndex: 0, timestamp: 0.0);
+                        }
+
+                        var expectedDirection = directions[state.nextIndex];
+
+                        if (currentDirection == expectedDirection)
+                        {
+                            return (nextIndex: state.nextIndex++, timestamp: currentTime);
+                        }
+                        else
+                        {
+                            if (currentDirection == directions[0])
+                            {
+                                return (nextIndex: 1, timestamp: currentTime);
+                            }
+                            return (nextIndex: 0, timestamp: 0.0);
+                        }
+                    })
+                    .Where(state => state.nextIndex == directions.Length)
                     .Select(_ => Unit.Default);
         }
     }

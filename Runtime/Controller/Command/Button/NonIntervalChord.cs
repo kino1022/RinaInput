@@ -1,25 +1,23 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using R3;
 using RinaInput.Controller.Module;
-using RinaInput.Operators;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+using R3;
 using UnityEngine;
+using RinaInput.Operators;
+using System.Linq;
+using Sirenix.Serialization;
+using Sirenix.OdinInspector;
 
-namespace RinaInput.Controller.Command.Button {
-    [CreateAssetMenu(menuName = "RinaInput/コマンド/時間制限付き同時押し")]
-    public class ChordAnyStream : AInputCommand
+namespace RinaInput.Controller.Command
+{
+    [CreateAssetMenu(menuName = "RinaInput/コマンド/非精密同時入力")]
+    public class NonIntervalChord : AInputCommand
     {
-
         [OdinSerialize]
-        [LabelText("同時押しするモジュール")]
+        [LabelText("同時入力するモジュール")]
         private List<IInputModule<float>> m_modules = new();
 
         protected override Observable<Unit> CreateStream()
         {
-
             if (m_modules.Count is 0 || m_modules is null)
             {
                 return Observable.Empty<Unit>();
@@ -47,10 +45,7 @@ namespace RinaInput.Controller.Command.Button {
                         .Select(module => module.Stream)
                         .ToArray();
 
-                    return sourceStream.ChordInInterval(
-                        TimeSpan.FromMilliseconds(m_inputGrace),
-                        others
-                        );
+                    return sourceStream.Chord(others);
                 });
         }
     }

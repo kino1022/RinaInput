@@ -1,10 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using R3;
-using RinaInput.Controller.Command;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using Sirenix.Utilities;
 using UnityEngine;
 
 namespace RinaInput.Controller.Command {
@@ -28,7 +23,12 @@ namespace RinaInput.Controller.Command {
 
         public int InputGrace => m_inputGrace;
 
-        public void GenerateStream()
+        private void Oalidate()
+        {
+            if (m_inputGrace < 0) Debug.Log($"{GetType().Name}の入力猶予が0ミリ秒です、入力が不可能なので見直してください");
+        }
+
+        public virtual void GenerateStream()
         {
             m_stream = CreateStream();
         }

@@ -78,6 +78,27 @@ namespace RinaInput.Operators {
 
         }
 
+        public static Observable<Unit> TapInSpan<T>(this Observable<InputSignal<T>> source, int count, TimeSpan interval) where T : struct
+        {
+            return source
+                .OnPressed()
+                .Timestamp()
+                .Scan(
+                    new List<(long timestamp, InputSignal<T> value)>(),
+                    (list, current) =>
+                    {
+                        list.Add(current);
+                        if (list.Count > count)
+                        {
+                            list.RemoveAt(0);
+                        }
+                        return list;
+                    })
+                .Where(list => list.Count == count)
+                .Where(list => (list[^1].timestamp - list[0].timestamp) <= interval.TotalSeconds)
+                .Select(_ => Unit.Default);
+        }
+
         /// <summary>
         /// 長押しを判定する
         /// </summary>

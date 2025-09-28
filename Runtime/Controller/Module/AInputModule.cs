@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 using R3;
-using RinaInput.Controller.Command;
-using RinaInput.Operators;
 using RinaInput.Runtime.Provider;
 using RinaInput.Signal;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using Sirenix.Utilities;
 using UnityEngine.InputSystem;
 using VContainer.Unity;
 
@@ -21,14 +16,17 @@ namespace RinaInput.Controller.Module {
         /// よってキャンセル関連のストリーム処理は廃して単純な入力処理のみに注力する
         /// </summary>
 
+        [SerializeField]
+        [LabelText("入力ソース")]
         private InputActionReference m_actionRef;
         
         protected Observable<InputSignal<T>> m_stream;
         
-        
         public Observable<InputSignal<T>> Stream => m_stream;
 
-        public void Start() {
+
+        public void Start()
+        {
             m_actionRef?.action?.Enable();
         }
 

@@ -5,18 +5,25 @@ using RinaInput.Controller.Module;
 using RinaInput.Lever.Direction.Definition;
 using RinaInput.Lever.Operator;
 using RinaInput.Lever.Signal;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace RinaInput.Controller.Command.Lever {
     [CreateAssetMenu(menuName = "RinaInput/コマンド/レバー連続入力")]
     public class MoveRow : AInputCommand
     {
-
+        [OdinSerialize]
+        [LabelText("入力ソース")]
         private IInputModule<Vector2> m_lever;
 
-
+        [SerializeField]
+        [LabelText("入力デットゾーン")]
+        [ProgressBar(0.0f,1.0f)]
         private float m_deadZone = 0.1f;
 
+        [OdinSerialize]
+        [LabelText("入力方向")]
         private List<Direction_Four> m_directions = new List<Direction_Four>();
 
         protected override Observable<Unit> CreateStream()
