@@ -23,7 +23,7 @@ namespace RinaInput.Controller.Command {
 
         public int InputGrace => m_inputGrace;
 
-        private void Oalidate()
+        private void OnValidate()
         {
             if (m_inputGrace < 0) Debug.Log($"{GetType().Name}の入力猶予が0ミリ秒です、入力が不可能なので見直してください");
         }

@@ -2,13 +2,14 @@ using R3;
 using RinaInput.Controller.Command;
 using RinaInput.Runtime.Provider;
 using RinaInput.Signal;
+using VContainer.Unity;
 
 namespace RinaInput.Controller.Module {
     /// <summary>
     /// ボタンやレバーなどの入力装置を表現するクラスに対して約束するメソッド
     /// </summary>
     /// <typeparam name="T">モジュールの入力値に使うデータ型</typeparam>
-    public interface IInputModule<T> where T : struct
+    public interface IInputModule<T> : IStartable where T : struct 
     {
 
         /// <summary>
