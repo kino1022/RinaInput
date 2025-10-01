@@ -9,7 +9,7 @@ using UnityEngine;
 using VContainer;
 
 namespace RinaInput.Controller {
-    [DefaultExecutionOrder(-10000)]
+    [DefaultExecutionOrder(-4000)]
     public class ControllerMonoBehaviour : SerializedMonoBehaviour {
 
         [TitleGroup("入力モジュール")]

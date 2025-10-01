@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using VContainer.Unity;
 
 namespace RinaInput.Controller.Module {
-    public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IStartable, IDisposable where T : struct {
+    public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IDisposable where T : struct {
 
         /// <summary>
         /// 入力自体に優先度を定義して管理すると、全体の動きに遅延が入るのと同時に、デザイナーの自由度が低下するので
@@ -36,9 +36,9 @@ namespace RinaInput.Controller.Module {
 
         public void GenerateStream(IInputStreamProvider provider) {
 
-            var stream = provider?.GetStream<T>(m_actionRef) ?? throw new NullReferenceException("Stream is null");
+            var stream = provider.GetStream<T>(m_actionRef) ?? throw new NullReferenceException("Stream is null");
 
-            InputContext(stream);
+            m_stream = InputContext(stream);
         }
         
         /// <summary>

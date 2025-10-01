@@ -15,8 +15,7 @@ namespace RinaInput.Controller.Module
         [ProgressBar(0.0f, 1.0f)]
         private float m_deadZone = 0.2f;
 
-        protected override Observable<InputSignal<float>> InputContext(Observable<InputSignal<float>> stream)
-        {
+        protected override Observable<InputSignal<float>> InputContext(Observable<InputSignal<float>> stream) {
             return stream
                 .OnPressed()
                 //デットゾーン未満の入力を除外
