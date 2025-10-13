@@ -2,7 +2,7 @@ using R3;
 using RinaInput.Signal;
 using UnityEngine.InputSystem;
 
-namespace RinaInput.Runtime.Provider {
+namespace RinaInput.Provider {
     public interface IInputStreamProvider {
         
         Observable<InputSignal<T>> GetStream<T> (InputAction action) where T : struct;

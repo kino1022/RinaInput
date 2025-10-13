@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using RinaInput.Runtime.Wrapper.Interface;
+using RinaInput.Wrapper.Interface;
 using UnityEngine.InputSystem;
 using VContainer;
 
-namespace RinaInput.Runtime.Wrapper {
+namespace RinaInput.Wrapper {
     public class InputActionProvider : IInputActionProvider {
 
         private readonly PlayerInputActions m_actions;

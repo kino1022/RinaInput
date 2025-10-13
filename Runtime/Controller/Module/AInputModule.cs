@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using R3;
-using RinaInput.Runtime.Provider;
+using RinaInput.Provider;
 using RinaInput.Signal;
 using Sirenix.OdinInspector;
 using UnityEngine.InputSystem;

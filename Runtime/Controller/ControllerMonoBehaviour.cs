@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using RinaInput.Controller.Command;
 using RinaInput.Controller.Module;
-using RinaInput.Runtime.Provider;
+using RinaInput.Provider;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;

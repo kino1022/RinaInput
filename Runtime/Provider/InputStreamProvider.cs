@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using R3;
 using RinaInput.Signal;
-using RinaInput.Runtime.Wrapper.Interface;
+using RinaInput.Wrapper.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
 
-namespace RinaInput.Runtime.Provider {
+namespace RinaInput.Provider {
     public class InputStreamProvider : IInputStreamProvider , IStartable {
 
         private readonly IObjectResolver m_resolver;

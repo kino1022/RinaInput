@@ -1,7 +1,7 @@
 using System;
-using RinaInput.Runtime.Provider;
-using RinaInput.Runtime.Wrapper;
-using RinaInput.Runtime.Wrapper.Interface;
+using RinaInput.Provider;
+using RinaInput.Wrapper.Interface;
+using RinaInput.Wrapper;
 using Sirenix.Serialization;
 using VContainer;
 using VContainer.Unity;

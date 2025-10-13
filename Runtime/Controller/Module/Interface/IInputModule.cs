@@ -1,6 +1,6 @@
 using R3;
 using RinaInput.Controller.Command;
-using RinaInput.Runtime.Provider;
+using RinaInput.Provider;
 using RinaInput.Signal;
 using VContainer.Unity;
 
