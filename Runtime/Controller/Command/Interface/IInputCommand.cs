@@ -7,7 +7,7 @@ namespace RinaInput.Controller.Command {
         /// <summary>
         /// 設ける入力猶予(ms)
         /// </summary>
-        int InputGrace { get; }
+        float InputGrace { get; }
 
         /// <summary>
         /// 入力が成功した際に流れるストリーム

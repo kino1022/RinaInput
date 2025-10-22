@@ -15,17 +15,17 @@ namespace RinaInput.Controller.Command {
         /// このコマンドの入力に許された猶予
         /// </summary>
         [SerializeField]
-        [LabelText("入力猶予")]
-        [ProgressBar(0, 10000)]
-        protected int m_inputGrace = 0;
+        [LabelText("入力猶予(秒)")]
+        [ProgressBar(0, 10)]
+        protected float m_inputGrace = 0;
 
         public Observable<Unit> Stream => m_stream;
 
-        public int InputGrace => m_inputGrace;
+        public float InputGrace => m_inputGrace;
 
         private void OnValidate()
         {
-            if (m_inputGrace < 0) Debug.Log($"{GetType().Name}の入力猶予が0ミリ秒です、入力が不可能なので見直してください");
+            if (m_inputGrace < 0) Debug.Log($"{GetType().Name}の入力猶予が0秒です、入力が不可能なので見直してください");
         }
 
         public virtual void GenerateStream()

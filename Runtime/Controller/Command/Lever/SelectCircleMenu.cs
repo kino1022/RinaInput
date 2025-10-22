@@ -34,6 +34,7 @@ namespace RinaInput.Controller.Command
         {
             //ソースが流れている場合にtrueを流すストリーム
             Observable<bool> trueGate = Stream.Select(_ => true);
+            
             //ソースが流れていない状態が1フレーム続くとfalseを流すストリーム
             Observable<bool> falseGate = Stream
                 .Timeout(TimeSpan.FromTicks(1))

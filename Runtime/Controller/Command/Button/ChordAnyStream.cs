@@ -48,7 +48,7 @@ namespace RinaInput.Controller.Command.Button {
                         .ToArray();
 
                     return sourceStream.ChordInInterval(
-                        TimeSpan.FromMilliseconds(m_inputGrace),
+                        TimeSpan.FromSeconds(m_inputGrace),
                         others
                         );
                 });

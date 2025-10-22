@@ -26,7 +26,7 @@ namespace RinaInput.Controller.Command.Button
                 .Stream
                 .TapInSpan(
                     m_count,
-                    TimeSpan.FromMilliseconds(InputGrace)
+                    TimeSpan.FromSeconds(InputGrace)
                 );
         }
     }

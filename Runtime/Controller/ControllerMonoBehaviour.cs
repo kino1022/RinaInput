@@ -9,7 +9,6 @@ using UnityEngine;
 using VContainer;
 
 namespace RinaInput.Controller {
-    [DefaultExecutionOrder(-4000)]
     public class ControllerMonoBehaviour : SerializedMonoBehaviour {
 
         [TitleGroup("入力モジュール")]
@@ -41,35 +40,24 @@ namespace RinaInput.Controller {
             m_streamProvider = m_resolver.Resolve<IInputStreamProvider>() 
                                ?? throw new NullReferenceException();
             
-            m_buttonModules?.ForEach(x => {
-                x?.Start();
-                x?.GenerateStream(m_streamProvider);
-            });
-
-            m_leverModules?.ForEach(x => {
-                x?.Start();
-                x?.GenerateStream(m_streamProvider);
-            });
-            
-            m_commands?.ForEach(x => {
-                x?.GenerateStream();
-            });
         }
         
-        protected virtual void Start() {
-            /*
+        protected void Start() {
+            
             m_buttonModules?.ForEach(x => {
+                x?.Start();
                 x?.GenerateStream(m_streamProvider);
             });
 
             m_leverModules?.ForEach(x => {
+                x?.Start();
                 x?.GenerateStream(m_streamProvider);
             });
             
             m_commands?.ForEach(x => {
                 x?.GenerateStream();
             });
-            */
+            
         }
     }
 }
