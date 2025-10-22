@@ -1,5 +1,5 @@
 {
-    "name": "RinaInput.Runtime",
+    "name": "RinaInput",
     "rootNamespace": "RinaInput",
     "references": [
         "GUID:92b68a3bbc8c0486b9718b9503336cc4",
