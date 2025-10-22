@@ -3,7 +3,7 @@ using R3;
 
 namespace RinaInput
 {
-    public static class OperatorsExtention
+    public static class OperatorsExtension
     {
         /// <summary>
         /// 特定のストリームが流れているかどうかのストリームを形成する

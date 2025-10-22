@@ -21,5 +21,6 @@ namespace RinaInput.Controller.Command
         /// </summary>
         /// <returns></returns>
         protected abstract Observable<T> CreateProperty();
+        
     }
 }

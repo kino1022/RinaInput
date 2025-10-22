@@ -18,7 +18,13 @@ namespace RinaInput.Operators {
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static Observable<InputSignal<T>> OnPressed<T>(this Observable<InputSignal<T>> source) where T : struct {
-            return source.Where(_ => _.Phase == InputActionPhase.Started);
+            return source
+                .Where(x => x.Phase == InputActionPhase.Started);
+        }
+
+        public static Observable<bool> OnPressedWithBoolean<T>(this Observable<InputSignal<T>> source) where T : struct {
+            return source
+                .Select(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Performed);
         }
 
         /// <summary>
@@ -78,6 +84,14 @@ namespace RinaInput.Operators {
 
         }
 
+        /// <summary>
+        /// 猶予時間内での連続入力を判定するストリーム
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="count"></param>
+        /// <param name="interval"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Observable<Unit> TapInSpan<T>(this Observable<InputSignal<T>> source, int count, TimeSpan interval) where T : struct
         {
             return source
@@ -131,7 +145,8 @@ namespace RinaInput.Operators {
         {
             var allStream = others
                 .Concat(new List<Observable<InputSignal<T>>>(others.ToList()))
-                .Select(s => s
+                .Select(s => 
+                    s
                     .FirstAsync()
                     .ToObservable()
                     .Select(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Canceled)
@@ -144,8 +159,11 @@ namespace RinaInput.Operators {
                 .Select(_ => Unit.Default)
                 .ThrottleFirst(TimeSpan.FromMilliseconds(1));
         }
-        
-        private enum State {Idle, Started}
+
+        private enum State {
+            Idle, 
+            Started
+        }
 
         /// <summary>
         /// 時間制限を設けた複数ボタンの同時押しを検知するストリーム

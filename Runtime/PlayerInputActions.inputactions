@@ -113,7 +113,7 @@
                 {
                     "name": "",
                     "id": "b1284ad6-0a40-4811-8fe7-7346cdc6a03c",
-                    "path": "<DualShockGamepad>/rightStick",
+                    "path": "<DualShockGamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -29,6 +29,7 @@ namespace RinaInput.Installer {
             builder 
                 .Register<IInputActionProvider, InputActionProvider>(Lifetime.Singleton)
                 .As<IInputActionProvider>();
+            
         }
     }
 }

@@ -45,7 +45,8 @@ namespace RinaInput.Controller.Command
                         .Select(module => module.Stream)
                         .ToArray();
 
-                    return sourceStream.Chord(others);
+                    return sourceStream
+                        .Chord(others);
                 });
         }
     }

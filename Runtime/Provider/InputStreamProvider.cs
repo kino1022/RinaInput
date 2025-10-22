@@ -15,16 +15,13 @@ namespace RinaInput.Provider {
 
         private readonly Dictionary<Guid, object> m_actionCache = new();
         
-        private IInputActionProvider m_actionProvider;
-        
-        
         [Inject]
         public InputStreamProvider(IObjectResolver resolver) {
             m_resolver = resolver;
         }
 
         public void Start() {
-            m_actionProvider = m_resolver.Resolve<IInputActionProvider>();
+            
         }
 
         public Observable<InputSignal<T>> GetStream<T>(InputAction action) where T : struct {
@@ -86,6 +83,7 @@ namespace RinaInput.Provider {
             if (newStream is object obj) {
                 m_actionCache[actionId] = obj;
             }
+            
             return newStream;
         }
 
