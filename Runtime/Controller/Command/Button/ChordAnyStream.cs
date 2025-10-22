@@ -27,8 +27,7 @@ namespace RinaInput.Controller.Command.Button {
 
             var streamWithIndex = m_modules
                 //モジュールとそのインデックスにストリームを変更する
-                .Select((module, index) => module.Stream.Select(signal => (signal, index)))
-                .ToList();
+                .StreamWithIndex();
 
             return Observable
                 .Merge(streamWithIndex)
@@ -38,16 +37,20 @@ namespace RinaInput.Controller.Command.Button {
                 .SelectMany(firstPressed =>
                 {
                     //最初に入力されたストリーム
-                    var sourceStream = m_modules[firstPressed.index].Stream;
+                    var sourceStream = m_modules[firstPressed.index]
+                        .Stream;
+                    
                     //他に入力されたストリーム
                     var others = m_modules
                         //最初のストリームを分離
                         .Where((_, index) => index != firstPressed.index)
                         //ストリームのみを抽出
                         .Select(module => module.Stream)
+                        //配列に
                         .ToArray();
 
-                    return sourceStream.ChordInInterval(
+                    return sourceStream
+                        .ChordInInterval(
                         TimeSpan.FromSeconds(m_inputGrace),
                         others
                         );

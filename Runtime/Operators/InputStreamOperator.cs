@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using R3;
 using RinaInput.Signal;
-using Sirenix.OdinValidator.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,12 +42,13 @@ namespace RinaInput.Operators {
             where T : struct 
         {
             return source
-                .Where(x => x.Phase == InputActionPhase.Canceled)
+                //流れたストリームが稼働していなければ動作
+                .Where(x => x.Phase != InputActionPhase.Canceled)
                 .Select(startSignal =>
                     Observable
                         .Timer(duration)
                         .TakeUntil(source.Where(x => x.Phase == InputActionPhase.Canceled))
-                        .Select(x => startSignal)
+                        .Select(_ => startSignal)
                 )
                 .Switch();
         }
@@ -63,13 +62,14 @@ namespace RinaInput.Operators {
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Observable<InputSignal<T>[]> Tap<T>(this Observable<InputSignal<T>> source, int count, long interval)
+        public static Observable<InputSignal<T>[]> Tap<T>(this Observable<InputSignal<T>> source, int count, TimeSpan interval)
             where T : struct 
         {
-            if (count < 0 || interval < 0) throw new ArgumentNullException();
+            if (count < 0 || interval.TotalMilliseconds < 0) throw new ArgumentNullException();
 
             return source
                 .OnPressed()
+                //流れたストリームに対してスタンプを添加
                 .Timestamp()
                 .Scan(
                     new List<(long timestamp, InputSignal<T> value)>(),
@@ -84,7 +84,7 @@ namespace RinaInput.Operators {
                 //入力回数分データがスタックされるまで待機
                 .Where(list => list.Count == count)
                 //リストの末尾とリストの先頭が猶予未満か感知
-                .Where(list => (list[^1].timestamp - list[0].timestamp) <= interval)
+                .Where(list => (list[^1].timestamp - list[0].timestamp) <= interval.TotalMilliseconds)
                 //リスト内のシグナルをリストにしてストリームに放流
                 .Select(list => list.Select(item => item.value).ToArray());
 
@@ -161,7 +161,7 @@ namespace RinaInput.Operators {
 
             return Observable
                 .CombineLatest(allStream)
-                .Where(s => s.All(IsPressed => IsPressed))
+                .Where(s => s.All(isPressed => isPressed))
                 .Select(_ => Unit.Default)
                 .ThrottleFirst(TimeSpan.FromMilliseconds(1));
         }

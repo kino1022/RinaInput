@@ -25,8 +25,7 @@ namespace RinaInput.Controller.Command
 
             var streamWithIndex = m_modules
                 //モジュールとそのインデックスにストリームを変更する
-                .Select((module, index) => module.Stream.Select(signal => (signal, index)))
-                .ToList();
+                .StreamWithIndex();
 
             return Observable
                 .Merge(streamWithIndex)
