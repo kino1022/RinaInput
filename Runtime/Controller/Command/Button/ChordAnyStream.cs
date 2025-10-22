@@ -22,6 +22,7 @@ namespace RinaInput.Controller.Command.Button {
 
             if (m_modules.Count is 0 || m_modules is null)
             {
+                Debug.Log("同時入力に利用するモジュールが指定されていませんでした、ストリームの生成を中断します");
                 return Observable.Empty<Unit>();
             }
 

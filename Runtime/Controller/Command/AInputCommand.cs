@@ -1,5 +1,6 @@
 using R3;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace RinaInput.Controller.Command {
@@ -9,6 +10,8 @@ namespace RinaInput.Controller.Command {
         /// <summary>
         /// 最終的に流れるストリーム
         /// </summary>
+        [OdinSerialize]
+        [ReadOnly]
         private Observable<Unit> m_stream;
 
         /// <summary>
@@ -30,7 +33,9 @@ namespace RinaInput.Controller.Command {
 
         public virtual void GenerateStream()
         {
+            Debug.Log("ストリームの生成処理を開始します");
             m_stream = CreateStream();
+            Debug.Log("ストリームの生成処理を終了しました");
         }
         
 

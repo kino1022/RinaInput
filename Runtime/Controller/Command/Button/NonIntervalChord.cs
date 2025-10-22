@@ -18,8 +18,8 @@ namespace RinaInput.Controller.Command
 
         protected override Observable<Unit> CreateStream()
         {
-            if (m_modules.Count is 0 || m_modules is null)
-            {
+            if (m_modules.Count is 0 || m_modules is null) {
+                Debug.Log("ストリームの生成時に要素がありませんでした");
                 return Observable.Empty<Unit>();
             }
 
@@ -44,7 +44,7 @@ namespace RinaInput.Controller.Command
                         //ストリームのみを抽出
                         .Select(module => module.Stream)
                         .ToArray();
-
+                    
                     return sourceStream
                         .Chord(others);
                 });

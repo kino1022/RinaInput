@@ -9,6 +9,7 @@ using UnityEngine;
 using VContainer;
 
 namespace RinaInput.Controller {
+    [DefaultExecutionOrder(-4000)]
     public class ControllerMonoBehaviour : SerializedMonoBehaviour {
 
         [TitleGroup("入力モジュール")]
@@ -35,6 +36,7 @@ namespace RinaInput.Controller {
 
         [Inject]
         public void Construct(IObjectResolver resolver) {
+            
             m_resolver = resolver ?? throw new ArgumentNullException();
             
             m_streamProvider = m_resolver.Resolve<IInputStreamProvider>() 

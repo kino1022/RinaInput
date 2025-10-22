@@ -22,6 +22,17 @@ namespace RinaInput.Controller.Command.Button
 
         protected override Observable<Unit> CreateStream()
         {
+
+            if (m_count <= 0) {
+                Debug.Log("連打の入力回数が0以下でした、ストリームの生成を中断します");
+                return Observable.Empty<Unit>();
+            }
+
+            if (m_module is null) {
+                Debug.Log("入力モジュールの指定が存在しませんでした、ストリームの生成を中断します");
+                return Observable.Return(Unit.Default);
+            }
+            
             return m_module
                 .Stream
                 .TapInSpan(

@@ -22,6 +22,12 @@ namespace RinaInput.Operators {
                 .Where(x => x.Phase == InputActionPhase.Started);
         }
 
+        /// <summary>
+        /// 指定したボタンが入力されているかどうかの真偽値ストリームを提供する
+        /// </summary>
+        /// <param name="source"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Observable<bool> OnPressedWithBoolean<T>(this Observable<InputSignal<T>> source) where T : struct {
             return source
                 .Select(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Performed);
