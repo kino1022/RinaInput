@@ -20,8 +20,7 @@ namespace RinaInput.Controller.Command.Button {
         protected override Observable<Unit> CreateStream()
         {
 
-            if (m_modules.Count is 0 || m_modules is null)
-            {
+            if (m_modules.Count is 0 || m_modules is null) {
                 Debug.Log("同時入力に利用するモジュールが指定されていませんでした、ストリームの生成を中断します");
                 return Observable.Empty<Unit>();
             }
@@ -34,7 +33,7 @@ namespace RinaInput.Controller.Command.Button {
             return Observable
                 .Merge(streamWithIndex)
                 //同時に流れた際は一つを受け取る
-                .Take(1)
+                //.Take(1)
                 //最初に押されたストリームとその他を分離して、その他を引数としてChordInIntervalを使用
                 .SelectMany(firstPressed =>
                 {

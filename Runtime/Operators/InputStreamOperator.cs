@@ -115,7 +115,7 @@ namespace RinaInput.Operators {
                         return list;
                     })
                 .Where(list => list.Count == count)
-                .Where(list => (list[^1].timestamp - list[0].timestamp) <= interval.TotalSeconds)
+                .Where(list => (list[^1].timestamp - list[0].timestamp) <= interval.TotalMilliseconds)
                 .Select(_ => Unit.Default);
         }
 
