@@ -17,9 +17,7 @@ namespace RinaInput.Controller.Module
 
         protected override Observable<InputSignal<float>> InputContext(Observable<InputSignal<float>> stream) {
             return stream
-                .OnPressed()
-                //デットゾーン未満の入力を除外
-                .Where(x => x.Value > m_deadZone);
+                .OnPressed();
         }
 
     }

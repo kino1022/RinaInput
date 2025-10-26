@@ -18,7 +18,7 @@ namespace RinaInput.Controller.Module {
         protected override Observable<InputSignal<Vector2>> InputContext(Observable<InputSignal<Vector2>> stream)
         {
             return stream
-                .OnMove(threshold: m_deadZone);
+                .OnMove(threshold: 0.0f);
         }
     }
 }
