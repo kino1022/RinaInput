@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace RinaInput.Operators {
-    public static class InputStreamOperator {
+    public static partial class InputStreamOperator {
 
         /// <summary>
         /// 指定したボタンが何かしらの入力された際に流れるストリーム

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using R3;
 using RinaInput.Controller.Module;
 using RinaInput.Lever.Direction.Definition;
-using RinaInput.Lever.Operator;
-using RinaInput.Lever.Signal;
+using RinaInput.Operators;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -36,13 +35,8 @@ namespace RinaInput.Controller.Command.Lever {
 
             return m_lever
                 .Stream
-                .Select(x => new LeverInputSignal(
-                    x.Phase,
-                    x.Value,
-                    x.Time
-                ))
                 .Sequence(
-                    TimeSpan.FromMilliseconds(m_inputGrace),
+                    TimeSpan.FromSeconds(m_inputGrace),
                     m_deadZone,
                     m_directions.ToArray()
                 );
