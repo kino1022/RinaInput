@@ -3,6 +3,10 @@ using R3;
 namespace RinaInput.Controller.Command {
     public interface IInputCommand
     {
+        /// <summary>
+        /// コマンドの入力が有効化どうか
+        /// </summary>
+        ReadOnlyReactiveProperty<bool> IsEnable { get; }
 
         /// <summary>
         /// 設ける入力猶予(ms)
@@ -18,6 +22,12 @@ namespace RinaInput.Controller.Command {
         /// ストリームの生成を行う
         /// </summary>
         void GenerateStream();
+        
+        /// <summary>
+        /// コマンドが有効かどうかを切り替える
+        /// </summary>
+        /// <param name="isEnable"></param>
+        void ChangeEnable(bool isEnable);
         
     }
 }

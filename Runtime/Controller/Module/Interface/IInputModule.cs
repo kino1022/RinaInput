@@ -13,6 +13,11 @@ namespace RinaInput.Controller.Module {
     {
 
         /// <summary>
+        /// 入力が有効であるかどうか
+        /// </summary>
+        ReadOnlyReactiveProperty<bool> IsEnable { get; }
+
+        /// <summary>
         /// 入力が成功した際に流れるストリーム
         /// </summary>
         Observable<InputSignal<T>> Stream { get; }
@@ -22,6 +27,12 @@ namespace RinaInput.Controller.Module {
         /// </summary>
         /// <param name="provider"></param>
         void GenerateStream(IInputStreamProvider provider);
+        
+        /// <summary>
+        /// 入力の有効化切り替えを行う
+        /// </summary>
+        /// <param name="isEnable"></param>
+        void ChangeEnable(bool isEnable);
 
     }
 }

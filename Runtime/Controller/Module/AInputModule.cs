@@ -14,10 +14,14 @@ namespace RinaInput.Controller.Module {
         [SerializeField]
         [LabelText("入力ソース")]
         private InputActionReference m_actionRef;
+
+        private ReactiveProperty<bool> _isEnable = new(true);
         
         protected Observable<InputSignal<T>> m_stream;
+
+        public Observable<InputSignal<T>> Stream => m_stream.Where(_ => _isEnable.CurrentValue == true);
         
-        public Observable<InputSignal<T>> Stream => m_stream;
+        public ReadOnlyReactiveProperty<bool> IsEnable => _isEnable;
 
 
         public void Start() {
@@ -35,6 +39,10 @@ namespace RinaInput.Controller.Module {
 
             m_stream = InputContext(stream);
             
+        }
+        
+        public void ChangeEnable(bool isEnable) {
+            _isEnable.Value = isEnable;
         }
         
         /// <summary>

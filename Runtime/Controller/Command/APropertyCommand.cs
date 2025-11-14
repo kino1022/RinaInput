@@ -8,6 +8,7 @@ namespace RinaInput.Controller.Command
         private Observable<T> m_property;
 
         public Observable<T> PropertyStream => m_property;
+        
 
         public override void GenerateStream()
         {

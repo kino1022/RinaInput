@@ -4,8 +4,9 @@ using Sirenix.Serialization;
 using UnityEngine;
 
 namespace RinaInput.Controller.Command {
-    public abstract class AInputCommand : SerializedScriptableObject, IInputCommand
-    {
+    public abstract class AInputCommand : SerializedScriptableObject, IInputCommand {
+
+        private ReactiveProperty<bool> _isEnable = new ReactiveProperty<bool>(true);
 
         /// <summary>
         /// 最終的に流れるストリーム
@@ -22,9 +23,11 @@ namespace RinaInput.Controller.Command {
         [ProgressBar(0, 10)]
         protected float m_inputGrace = 0;
 
-        public Observable<Unit> Stream => m_stream;
+        public Observable<Unit> Stream => m_stream.Where(_ => _isEnable.CurrentValue);
 
         public float InputGrace => m_inputGrace;
+        
+        public ReadOnlyReactiveProperty<bool> IsEnable => _isEnable;
 
         private void OnValidate()
         {
@@ -40,6 +43,8 @@ namespace RinaInput.Controller.Command {
         
 
         protected abstract Observable<Unit> CreateStream();
-        
+
+        public void ChangeEnable(bool isEnable) => _isEnable.Value = isEnable;
+
     }
 }
