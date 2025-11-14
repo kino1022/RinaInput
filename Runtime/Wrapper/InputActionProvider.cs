@@ -8,15 +8,15 @@ using VContainer;
 namespace RinaInput.Wrapper {
     public class InputActionProvider : IInputActionProvider {
 
-        private readonly PlayerInputActions m_actions;
+        private readonly InputActionAsset m_actions;
 
         [Inject]
-        public InputActionProvider(PlayerInputActions actions) {
+        public InputActionProvider(InputActionAsset actions) {
             m_actions = actions ?? throw new ArgumentNullException(nameof(actions));
         }
 
         public void Dispose() {
-            m_actions.Dispose();
+            m_actions.Disable();
         }
 
         public void Enable() => m_actions.Enable();

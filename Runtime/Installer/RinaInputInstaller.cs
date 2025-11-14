@@ -3,6 +3,7 @@ using RinaInput.Provider;
 using RinaInput.Wrapper.Interface;
 using RinaInput.Wrapper;
 using Sirenix.Serialization;
+using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
 
@@ -14,13 +15,13 @@ namespace RinaInput.Installer {
     public class RinaInputInstaller : IInstaller {
 
         [OdinSerialize] 
-        private PlayerInputActions m_actionsMap;
+        private InputActionAsset m_actionsMap;
 
         public void Install(IContainerBuilder builder) {
             
             builder
                 .RegisterInstance(m_actionsMap)
-                .As<PlayerInputActions>();
+                .As<InputActionAsset>();
 
             builder
                 .Register<IInputStreamProvider, InputStreamProvider>(Lifetime.Singleton)
