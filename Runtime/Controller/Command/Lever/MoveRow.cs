@@ -35,7 +35,7 @@ namespace RinaInput.Controller.Command.Lever {
 
             return m_lever
                 .Stream
-                .Sequence(
+                .SequenceFour(
                     TimeSpan.FromSeconds(m_inputGrace),
                     m_deadZone,
                     m_directions.ToArray()
