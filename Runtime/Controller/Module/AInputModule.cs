@@ -19,7 +19,9 @@ namespace RinaInput.Controller.Module {
         
         protected Observable<InputSignal<T>> m_stream;
 
-        public Observable<InputSignal<T>> Stream => m_stream.Where(_ => _isEnable.CurrentValue == true);
+        public Observable<InputSignal<T>> Stream => m_stream != null
+            ? m_stream.Where(_ => _isEnable.CurrentValue == true)
+            : Observable.Empty<InputSignal<T>>();
         
         public ReadOnlyReactiveProperty<bool> IsEnable => _isEnable;
 

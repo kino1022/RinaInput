@@ -23,7 +23,9 @@ namespace RinaInput.Controller.Command {
         [ProgressBar(0, 10)]
         protected float m_inputGrace = 0;
 
-        public Observable<Unit> Stream => m_stream.Where(_ => _isEnable.CurrentValue);
+        public Observable<Unit> Stream => m_stream != null 
+            ? m_stream.Where(_ => _isEnable.CurrentValue)
+            : Observable.Empty<Unit>();
 
         public float InputGrace => m_inputGrace;
         

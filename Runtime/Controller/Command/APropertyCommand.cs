@@ -7,7 +7,9 @@ namespace RinaInput.Controller.Command
 
         private Observable<T> m_property;
 
-        public Observable<T> PropertyStream => m_property;
+        public Observable<T> PropertyStream => m_property　!= null
+            ? m_property.Where(_ => IsEnable.CurrentValue)
+            : Observable.Empty<T>();
         
 
         public override void GenerateStream()

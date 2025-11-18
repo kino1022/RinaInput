@@ -29,32 +29,9 @@ namespace RinaInput.Controller.Command.Button {
                 //モジュールとそのインデックスにストリームを変更する
                 .StreamWithIndex();
 
-            return Observable
-                .Merge(streamWithIndex)
-                //同時に流れた際は一つを受け取る
-                //.Take(1)
-                //最初に押されたストリームとその他を分離して、その他を引数としてChordInIntervalを使用
-                .SelectMany(firstPressed =>
-                {
-                    //最初に入力されたストリーム
-                    var sourceStream = m_modules[firstPressed.index]
-                        .Stream;
-                    
-                    //他に入力されたストリーム
-                    var others = m_modules
-                        //最初のストリームを分離
-                        .Where((_, index) => index != firstPressed.index)
-                        //ストリームのみを抽出
-                        .Select(module => module.Stream)
-                        //配列に
-                        .ToArray();
-
-                    return sourceStream
-                        .ChordInInterval(
-                        TimeSpan.FromSeconds(m_inputGrace),
-                        others
-                        );
-                });
+            return m_modules
+                .Select(x => x.Stream)
+                .ChordInIntervalByEdge(TimeSpan.FromSeconds(m_inputGrace));
         }
     }
 }
