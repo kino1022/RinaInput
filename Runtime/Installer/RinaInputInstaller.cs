@@ -26,11 +26,6 @@ namespace RinaInput.Installer {
             builder
                 .Register<IInputStreamProvider, InputStreamProvider>(Lifetime.Singleton)
                 .As<IInputStreamProvider>();
-            
-            builder 
-                .Register<IInputActionProvider, InputActionProvider>(Lifetime.Singleton)
-                .As<IInputActionProvider>();
-            
         }
     }
 }
