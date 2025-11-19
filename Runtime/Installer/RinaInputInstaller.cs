@@ -18,7 +18,7 @@ namespace RinaInput.Installer {
         private InputActionAsset m_actionsMap;
 
         public void Install(IContainerBuilder builder) {
-            
+
             builder
                 .RegisterInstance(m_actionsMap)
                 .As<InputActionAsset>();
