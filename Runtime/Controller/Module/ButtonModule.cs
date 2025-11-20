@@ -16,8 +16,7 @@ namespace RinaInput.Controller.Module
         private float m_deadZone = 0.2f;
 
         protected override Observable<InputSignal<float>> InputContext(Observable<InputSignal<float>> stream) {
-            return stream
-                .OnPressed();
+            return stream;
         }
 
     }
