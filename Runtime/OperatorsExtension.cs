@@ -14,8 +14,7 @@ namespace RinaInput
         /// <returns>ストリームが流れているかのストリーム</returns>
         public static Observable<bool> IsStreamActive<T>(this Observable<T> stream, int tickInterval = 1)
         {
-            if (tickInterval < 0)
-            {
+            if (tickInterval < 0) {
                 return Observable.Empty<bool>();
             }
 
