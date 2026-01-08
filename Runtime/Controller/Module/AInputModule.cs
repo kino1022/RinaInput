@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 using VContainer.Unity;
 
 namespace RinaInput.Controller.Module {
-    public abstract class AInputModule<T> : SerializedMonoBehaviour, IInputModule<T>, IDisposable where T : struct {
+    public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IDisposable where T : struct {
 
         [OdinSerialize]
         [LabelText("入力ソース")]
