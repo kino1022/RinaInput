@@ -9,8 +9,7 @@ namespace RinaInput.Controller.Module {
     [CreateAssetMenu(menuName = "RinaInput/モジュール/三次元座標")]
     public class PositionModule : AInputModule<Vector3> {
         protected override Observable<InputSignal<Vector3>> InputContext(Observable<InputSignal<Vector3>> stream) {
-            return stream
-                .DistinctUntilChanged();
+            return stream;
         }
     }
 }
