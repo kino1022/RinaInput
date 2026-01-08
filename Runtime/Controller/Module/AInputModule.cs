@@ -9,9 +9,9 @@ using UnityEngine.InputSystem;
 using VContainer.Unity;
 
 namespace RinaInput.Controller.Module {
-    public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IDisposable where T : struct {
+    public abstract class AInputModule<T> : ScriptableObject, IInputModule<T>, IDisposable where T : struct {
 
-        [OdinSerialize]
+        [SerializeField]
         [LabelText("入力ソース")]
         protected InputActionReference m_actionRef;
 
