@@ -13,7 +13,7 @@ namespace RinaInput.Controller.Module {
 
         [SerializeField]
         [LabelText("入力ソース")]
-        private InputActionReference m_actionRef;
+        protected InputActionReference m_actionRef;
 
         private ReactiveProperty<bool> _isEnable = new(true);
         
