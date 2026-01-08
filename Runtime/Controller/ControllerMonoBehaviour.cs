@@ -22,6 +22,11 @@ namespace RinaInput.Controller {
         [LabelText("レバー入力モジュール")]
         private List<IInputModule<Vector2>> m_leverModules = new();
         
+        [TitleGroup("位置入力モジュール")]
+        [OdinSerialize]
+        [LabelText("位置入力モジュール")]
+        private List<IInputModule<Vector3>> m_positionModules = new();
+        
         [TitleGroup("コマンド")]
         [OdinSerialize]
         [LabelText("有効化コマンド")]
@@ -52,6 +57,11 @@ namespace RinaInput.Controller {
             });
 
             m_leverModules?.ForEach(x => {
+                x?.Start();
+                x?.GenerateStream(m_streamProvider);
+            });
+            
+            m_positionModules?.ForEach(x => {
                 x?.Start();
                 x?.GenerateStream(m_streamProvider);
             });
