@@ -8,8 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace RinaInput.Controller.Module {
     [CreateAssetMenu(menuName = "RinaInput/モジュール/レバー")]
-    public class LeverModule : AInputModule<Vector2>
-    {
+    public class LeverModule : AInputModule<Vector2> {
 
         [SerializeField]
         [LabelText("デットゾーン")]
