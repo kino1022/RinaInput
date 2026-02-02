@@ -12,7 +12,6 @@ namespace RinaInput.Controller.Module {
     public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IDisposable where T : struct {
 
         [SerializeField]
-        [LabelText("入力ソース")]
         protected InputActionReference m_actionRef;
 
         private ReactiveProperty<bool> _isEnable = new(true);
