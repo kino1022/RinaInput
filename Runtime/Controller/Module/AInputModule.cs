@@ -11,7 +11,7 @@ using VContainer.Unity;
 namespace RinaInput.Controller.Module {
     public abstract class AInputModule<T> : SerializedScriptableObject, IInputModule<T>, IDisposable where T : struct {
 
-        [SerializeField]
+        [OdinSerialize]
         [DrawWithUnity]
         protected InputActionReference m_actionRef;
 
